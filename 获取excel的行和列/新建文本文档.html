@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>小蓝枣-js读取Excel演示</title>
+    <script src="xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <input type="file" onchange="readExcel(this)" />
+    <script>
+		function readExcel(file_obj){
+			var reader = new FileReader();
+			var file = file_obj.files[0];
+			reader.readAsBinaryString(file);
+			
+			reader.onload = function (e) {
+				var data = e.target.result;
+				var wb = XLSX.read(data, {type: 'binary'});
+
+				sheetName = wb.SheetNames[0]   // 获取文档中第一个sheet页签的名字
+				sheets = wb.Sheets[sheetName]   // 获sheet名页签下的数据
+				
+				console.log(sheets);   // 返回sheet对象到控制台
+			};
+		}
+    </script>
+</body>
+
+</html>
